@@ -40,7 +40,7 @@ sudo bash -c "echo 'nl_NL ISO-8859-1' >> /etc/locale.gen"
 sudo locale-gen &>/dev/null
 printf "\e[92mOK\e[0m\n"
 #***************************************************************************
-printf "\e[96m* DSRM P1 LOGGER FILES\n"
+printf "\e[96m* INSTALLING DISAGGREGATION FILES from github.com/disaggregation\n"
 printf "\e[96m  - Creating folder structure(s)..."
 sudo mkdir $log_dir &>/dev/null
 sudo mkdir $log_dir "/data" &>/dev/null
@@ -50,13 +50,13 @@ printf "\e[92mOK\e[0m\n"
 printf "\e[96m  - Downloading files..."
 sudo rm ${log_dir}/master-logger.zip &>/dev/null
 sudo wget -q https://github.com/disaggregation/logger-DSMR-P1-usb/archive/master.zip -O ${log_dir}/master-logger.zip &>/dev/null
-printf "\e[92mLogger OK\e[0m\n"
+printf "\n\e[0mLogger\e[92m OK\e[0m\n"
 sudo rm ${log_dir}/master-disaggregator.zip &>/dev/null
 sudo wget -q https://github.com/disaggregation/disaggregtor-deltaP/archive/master.zip -O ${log_dir}/master-disaggregator.zip &>/dev/null
-printf "\e[92mDisaggregation OK\e[0m\n"
+printf "\e[0mDisaggregation\e[92m OK\e[0m\n"
 sudo rm ${log_dir}/master-viewer.zip &>/dev/null
 sudo wget -q https://github.com/disaggregation/viewer/archive/master.zip -O ${log_dir}/master-viewer.zip &>/dev/null
-printf "\e[92mViewer (website) OK\e[0m\n"
+printf "\e02mViewer (website)\e[92m OK\e[0m\n"
 #***************************************************************************
 printf "\e[96m  - Extracting files..."
 sudo unzip -q -o ${log_dir}/master-logger.zip -d ${log_dir} &>/dev/null
@@ -80,10 +80,13 @@ printf "\e[92mOK\e[0m\n"
 printf "\e[96m* PYTHON DEPENDENCIES\n"
 printf "\e[96m  - Downloading and installing pyserial..."
 pip install pyserial >/dev/null
+printf "\e[92mOK\e[0m\n"
 printf "\e[96m  - Downloading and installing plotly..."
 pip install plotly >/dev/null
+printf "\e[92mOK\e[0m\n"
 printf "\e[96m  - Downloading and installing cufflings..."
 pip install cufflings >/dev/null
+printf "\e[92mOK\e[0m\n"
 printf "\e[96m  - Downloading and installing flask..."
 pip install flask >/dev/null
 printf "\e[92mOK\e[0m\n"
