@@ -110,19 +110,25 @@ crontab tempcron
 sudo rm tempcron
 printf "\e[92mOK\e[0m\n"
 #***************************************************************************
-printf "\e[96m  - Start logger DSMR P1 script..."
-screen -dmS atboot_P1_logger /usr/bin/python ${log_dir}/schedule_p1_reader.py 2>&1 &>/dev/null 
-printf "\e[92m - OK\e[0m\n"
+if ls /dev | grep 'ttyUSB' >/dev/null 2>&1; then 
+  printf "\e[96m  - Start logger DSMR P1 script..."
+  screen -dmS atboot_P1_logger /usr/bin/python ${log_dir}/schedule_p1_reader.py 2>&1 &>/dev/null 
+  printf "\e[92m - OK\e[0m\n"
 
 #printf "\e[96m  - Init website DB..."
 # should be implemented
-printf "\e[96m  - Start viewer (website at localhost:5000)..."
-screen -dmS atboot_disaggregation_viewer /usr/bin/python ${log_dir}/start_webserver.py 2>&1 &>/dev/null 
-printf "\e[92m - OK\e[0m\n"
+  printf "\e[96m  - Start viewer (website at localhost:5000)..."
+  screen -dmS atboot_disaggregation_viewer /usr/bin/python ${log_dir}/start_webserver.py 2>&1 &>/dev/null 
+  printf "\e[92m - OK\e[0m\n"
 
-printf "\e[96m  - Start disaggregator..."
-screen -dmS atboot_disaggregation_disaggregator /usr/bin/python ${log_dir}/disaggregator/schedule_disaggregator.py 2>&1 &>/dev/null 
-printf "\e[92m - OK\e[0m\n"
+  printf "\e[96m  - Start disaggregator..."
+  screen -dmS atboot_disaggregation_disaggregator /usr/bin/python ${log_dir}/disaggregator/schedule_disaggregator.py 2>&1 &>/dev/null 
+  printf "\e[92m - OK\e[0m\n"
+  printf "\e[92mOK\e[0m\n"
+else
+  printf "\e[91mUSB NOT FOUND, could not start scripts! Connect USB cable and reboot! ;0)\e[0m\n"
+fi
+
 #***************************************************************************
 printf "\n\e[91mEnd of installation\e[0m - \e[92mOpen Source disaggregation code installed. ;-)\n\e[0m"
 #***************************************************************************
