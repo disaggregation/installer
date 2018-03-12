@@ -44,6 +44,7 @@ printf "\e[96m* DSRM P1 LOGGER FILES\n"
 printf "\e[96m  - Creating folder structure(s)..."
 sudo mkdir $log_dir &>/dev/null
 sudo mkdir $log_dir "/data" &>/dev/null
+sudo cd $log_dir &>/dev/null
 printf "\e[92mOK\e[0m\n"
 #***************************************************************************
 printf "\e[96m  - Downloading files..."
@@ -88,7 +89,7 @@ pip install flask >/dev/null
 printf "\e[92mOK\e[0m\n"
 #***************************************************************************
 printf "\e[96m* CONFIGURE\n"
-printf "\e[96m  - Set CRON-jobs..."
+printf "\e[96m  - Set CRON-jobs...\n"
 sudo cd ${log_dir}
 echo "@reboot screen -dmS atboot_disaggregation_P1_logger /usr/bin/python  ${log_dir}/schedule_p1_reader.py" >> tempcron
 echo "@reboot screen -dmS atboot_disaggregation_disaggregator /usr/bin/python  ${log_dir}/schedule_disaggregator.py" >> tempcron
@@ -107,5 +108,5 @@ printf "\e[96m  - Start viwer (website at localhost:5000)..."
 screen -dmS atboot_disaggregation_viewer /usr/bin/python ${log_dir}/schedule_viewer.py 2>&1 &>/dev/null 
 printf "\e[92m - OK\e[0m\n"
 #***************************************************************************
-printf "\n\e[33mEnd of installation - Open Source disaggregation project installed. ;-)\n"
+printf "\n\e[91mEnd of installation\e[0m - \e[92mOpen Source disaggregation project installed. ;-)\n\e[0m"
 #***************************************************************************
