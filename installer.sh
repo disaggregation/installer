@@ -52,24 +52,28 @@ sudo rm ${log_dir}/master-logger.zip &>/dev/null
 sudo wget -q https://github.com/disaggregation/logger-DSMR-P1-usb/archive/master.zip -O ${log_dir}/master-logger.zip &>/dev/null
 printf "\n\e[0mLogger\e[92m OK\e[0m\n"
 sudo rm ${log_dir}/master-disaggregator.zip &>/dev/null
-sudo wget -q https://github.com/disaggregation/disaggregtor-deltaP/archive/master.zip -O ${log_dir}/master-disaggregator.zip &>/dev/null
+sudo wget -q https://github.com/disaggregation/disaggregator-deltaPower/archive/master.zip -O ${log_dir}/master-disaggregator.zip &>/dev/null
 printf "\e[0mDisaggregation\e[92m OK\e[0m\n"
 sudo rm ${log_dir}/master-viewer.zip &>/dev/null
 sudo wget -q https://github.com/disaggregation/viewer/archive/master.zip -O ${log_dir}/master-viewer.zip &>/dev/null
-printf "\e02mViewer (website)\e[92m OK\e[0m\n"
+printf "\e0mViewer (website)\e[92m OK\e[0m\n"
 #***************************************************************************
 printf "\e[96m  - Extracting files..."
-sudo unzip -q -o ${log_dir}/master-logger.zip -d ${log_dir} &>/dev/null
-sudo unzip -q -o ${log_dir}/master-disaggregator.zip -d ${log_dir} &>/dev/null
-sudo unzip -q -o ${log_dir}/master-viewer.zip -d ${log_dir} &>/dev/null
+sudo unzip -q -o ${log_dir}/master-logger.zip -d ${log_dir}/logger &>/dev/null
+sudo unzip -q -o ${log_dir}/master-disaggregator.zip -d ${log_dir}/disaggregation &>/dev/null
+sudo unzip -q -o ${log_dir}/master-viewer.zip -d ${log_dir}/viewer &>/dev/null
 printf "\e[92mOK\e[0m\n"
 #***************************************************************************
 printf "\e[96m  - Cleanup files..."
 sudo rm ${log_dir}/master-logger.zip &>/dev/null
-sudo rm ${log_dir}/master-disaggregator.zip &>/dev/null
-sudo rm ${log_dir}/master-viewer.zip &>/dev/null
 sudo mv ${log_dir}/logger-DSMR-P1-usb-master/* .
 sudo rm ${log_dir}/logger-DSMR-P1-usb-master
+sudo rm ${log_dir}/master-disaggregator.zip &>/dev/null
+sudo mv ${log_dir}/disaggregator-deltaPower-master/* .
+sudo rm ${log_dir}/disaggregator-deltaPower-master
+sudo rm ${log_dir}/master-viewer.zip &>/dev/null
+sudo mv ${log_dir}/viewer-master/* .
+sudo rm ${log_dir}/viewer-master
 printf "\e[92mOK\e[0m\n"
 #***************************************************************************
 printf "\e[96m  - Changing file permissions and rights to pi..."
@@ -84,8 +88,8 @@ printf "\e[92mOK\e[0m\n"
 printf "\e[96m  - Downloading and installing plotly..."
 pip install plotly >/dev/null
 printf "\e[92mOK\e[0m\n"
-printf "\e[96m  - Downloading and installing cufflings..."
-pip install cufflings >/dev/null
+printf "\e[96m  - Downloading and installing cuflinks..."
+pip install cuflinks >/dev/null
 printf "\e[92mOK\e[0m\n"
 printf "\e[96m  - Downloading and installing flask..."
 pip install flask >/dev/null
@@ -94,9 +98,9 @@ printf "\e[92mOK\e[0m\n"
 printf "\e[96m* CONFIGURE\n"
 printf "\e[96m  - Set CRON-jobs...\n"
 sudo cd ${log_dir}
-echo "@reboot screen -dmS atboot_disaggregation_P1_logger /usr/bin/python  ${log_dir}/schedule_p1_reader.py" >> tempcron
-echo "@reboot screen -dmS atboot_disaggregation_disaggregator /usr/bin/python  ${log_dir}/schedule_disaggregator.py" >> tempcron
-echo "@reboot screen -dmS atboot_disaggregation_viewer /usr/bin/python  ${log_dir}/schedule_viewer.py" >> tempcron
+echo "@reboot screen -dmS atboot_disaggregation_P1_logger /usr/bin/python  ${log_dir}/logger/schedule_p1_reader.py" >> tempcron
+echo "@reboot screen -dmS atboot_disaggregation_disaggregator /usr/bin/python  ${log_dir}/disaggregator/schedule_disaggregator.py" >> tempcron
+echo "@reboot screen -dmS atboot_disaggregation_viewer /usr/bin/python  ${log_dir}/viwer/start_webserver.py" >> tempcron
 crontab tempcron
 sudo rm tempcron
 printf "\e[92mOK\e[0m\n"
@@ -107,9 +111,9 @@ printf "\e[92m - OK\e[0m\n"
 printf "\e[96m  - Start disaggregator..."
 screen -dmS atboot_disaggregation_disaggregator /usr/bin/python ${log_dir}/schedule_disaggregator.py 2>&1 &>/dev/null 
 printf "\e[92m - OK\e[0m\n"
-printf "\e[96m  - Start viwer (website at localhost:5000)..."
-screen -dmS atboot_disaggregation_viewer /usr/bin/python ${log_dir}/schedule_viewer.py 2>&1 &>/dev/null 
+printf "\e[96m  - Start viewer (website at localhost:5000)..."
+screen -dmS atboot_disaggregation_viewer /usr/bin/python ${log_dir}/start_webserver.py 2>&1 &>/dev/null 
 printf "\e[92m - OK\e[0m\n"
 #***************************************************************************
-printf "\n\e[91mEnd of installation\e[0m - \e[92mOpen Source disaggregation project installed. ;-)\n\e[0m"
+printf "\n\e[91mEnd of installation\e[0m - \e[92mOpen Source disaggregation code installed. ;-)\n\e[0m"
 #***************************************************************************
