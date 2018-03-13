@@ -58,7 +58,7 @@ sudo wget -q https://github.com/disaggregation/disaggregator-deltaPower/archive/
 printf "\e[0mDisaggregation\e[92m OK\e[0m\n"
 sudo rm ${log_dir}/master-viewer.zip &>/dev/null
 sudo wget -q https://github.com/disaggregation/viewer/archive/master.zip -O ${log_dir}/master-viewer.zip &>/dev/null
-printf "\e0mViewer (website)\e[92m OK\e[0m\n"
+printf "\e[0mViewer (website)\e[92m OK\e[0m\n"
 #***************************************************************************
 printf "\e[96m  - Extracting files..."
 sudo unzip -q -o ${log_dir}/master-logger.zip -d ${log_dir}/logger &>/dev/null
