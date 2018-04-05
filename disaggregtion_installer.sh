@@ -103,7 +103,8 @@ printf "\e[96m  - Downloading and installing cufflinks..."
 pip install cufflinks >/dev/null
 printf "\e[92mOK\e[0m\n"
 printf "\e[96m  - Downloading and installing flask..."
-pip install flask >/dev/null
+pip install flask --upgrade >/dev/null
+pip install flask-cli >/dev/null
 printf "\e[92mOK\e[0m\n"
 #***************************************************************************
 printf "\e[96m* CONFIGURE\n"
