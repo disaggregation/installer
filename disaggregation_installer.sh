@@ -50,20 +50,17 @@ sudo cd $log_dir >> disaggregation_installer.log
 printf "\e[92mOK\e[0m\n"
 #***************************************************************************
 printf "\e[96m  - Downloading files..."
-sudo rm ${log_dir}/master-logger.zip >> disaggregation_installer.log
-sudo wget -q https://github.com/disaggregation/logger-DSMR-P1-usb/archive/master.zip -O ${log_dir}/master-logger.zip >> disaggregation_installer.log
+sudo wget -q https://github.com/disaggregation/logger-DSMR-P1-usb/archive/master.zip -O ${log_dir}/master-logger.zip --no-check-certificate >> disaggregation_installer.log
 printf "\n\e[0mLogger\e[92m OK\e[0m\n"
-sudo rm ${log_dir}/master-disaggregator.zip >> disaggregation_installer.log
-sudo wget -q https://github.com/disaggregation/disaggregator-deltaPower/archive/master.zip -O ${log_dir}/master-disaggregator.zip >> disaggregation_installer.log
+sudo wget -q https://github.com/disaggregation/disaggregator-deltaPower/archive/master.zip -O ${log_dir}/master-disaggregator.zip --no-check-certificate >> disaggregation_installer.log
 printf "\e[0mDisaggregator\e[92m OK\e[0m\n"
-sudo rm ${log_dir}/master-viewer.zip >> disaggregation_installer.log
-sudo wget -q https://github.com/disaggregation/viewer/archive/master.zip -O ${log_dir}/master-viewer.zip >> disaggregation_installer.log
+sudo wget -q https://github.com/disaggregation/viewer/archive/master.zip -O ${log_dir}/master-viewer.zip --no-check-certificate >> disaggregation_installer.log
 printf "\e[0mViewer (WebApp)\e[92m OK\e[0m\n"
 #***************************************************************************
 printf "\e[96m  - Extracting files..."
 sudo unzip -q -o ${log_dir}/master-logger.zip -d ${log_dir}/logger >> disaggregation_installer.log
 sudo rm ${log_dir}/master-logger.zip >> disaggregation_installer.log
-sudo mv ${log_dir}/logger/logger-DSMR-P1-usb-master/* ${log_dir}
+sudo mv ${log_dir}/logger/logger-DSMR-P1-usb-master/* ${log_dir}/logger
 sudo rm ${log_dir}/logger/logger-DSMR-P1-usb-master
 
 sudo unzip -q -o ${log_dir}/master-disaggregator.zip -d ${log_dir}/disaggregator >> disaggregation_installer.log
@@ -82,10 +79,12 @@ sudo chmod -R 777 ${log_dir} >> disaggregation_installer.log
 sudo chown -R pi ${log_dir} >> disaggregation_installer.log
 printf "\e[92mOK\e[0m\n"
 #***************************************************************************
-# printf "\e[96m  - creating venv..." 
 # should be implemented
+# printf "\e[96m  - creating venv..." 
 # printf "\e[92mOK\e[0m\n"
 #***************************************************************************
+printf "\e[96m* PYTHON INSTALLATION\n"
+sudo apt-get install python >/dev/null
 printf "\e[96m* PYTHON DEPENDENCIES\n"
 printf "\e[96m  - Downloading and installing pyserial..."
 pip install pyserial >/dev/null
