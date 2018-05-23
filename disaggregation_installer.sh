@@ -61,17 +61,17 @@ printf "\e[96m  - Extracting files..."
 sudo unzip -q -o ${log_dir}/master-logger.zip -d ${log_dir}/logger >> disaggregation_installer.log
 sudo rm ${log_dir}/master-logger.zip >> disaggregation_installer.log
 sudo mv ${log_dir}/logger/logger-DSMR-P1-usb-master/* ${log_dir}/logger
-sudo rm ${log_dir}/logger/logger-DSMR-P1-usb-master
+sudo rm -rf ${log_dir}/logger/logger-DSMR-P1-usb-master
 
 sudo unzip -q -o ${log_dir}/master-disaggregator.zip -d ${log_dir}/disaggregator >> disaggregation_installer.log
 sudo rm ${log_dir}/master-disaggregator.zip >> disaggregation_installer.log
 sudo mv ${log_dir}/disaggregator/disaggregator-deltaPower-master/* ${log_dir}/disaggregator
-sudo rm ${log_dir}/disaggregator/disaggregator-deltaPower-master
+sudo rm -rf ${log_dir}/disaggregator/disaggregator-deltaPower-master
 
 sudo unzip -q -o ${log_dir}/master-viewer.zip -d ${log_dir}/viewer >> disaggregation_installer.log
 sudo rm ${log_dir}/master-viewer.zip >> disaggregation_installer.log
 sudo mv ${log_dir}/viewer/viewer-master/* ${log_dir}/viewer
-sudo rm ${log_dir}/viewer/viewer-master
+sudo rm -rf ${log_dir}/viewer/viewer-master
 printf "\e[92mOK\e[0m\n"
 #***************************************************************************
 printf "\e[96m  - Changing file permissions and rights to pi..."
@@ -83,8 +83,9 @@ printf "\e[92mOK\e[0m\n"
 # printf "\e[96m  - creating venv..." 
 # printf "\e[92mOK\e[0m\n"
 #***************************************************************************
-printf "\e[96m* PYTHON INSTALLATION\n"
+printf "\e[96m* PYTHON AND PIP INSTALLATION\n"
 sudo apt-get install python >/dev/null
+sudo apt install python3-pip >/dev/null
 printf "\e[96m* PYTHON DEPENDENCIES\n"
 printf "\e[96m  - Downloading and installing pyserial..."
 pip install pyserial >/dev/null
@@ -109,9 +110,9 @@ printf "\e[92mOK\e[0m\n"
 printf "\e[96m* CONFIGURE\n"
 printf "\e[96m  - Set CRON-jobs...\n"
 sudo cd ${log_dir}
-echo "@reboot screen -dmS atboot_disaggregation_P1_logger /usr/bin/python  ${log_dir}/logger/schedule_p1_reader.py" >> tempcron
-echo "@reboot screen -dmS atboot_disaggregation_disaggregator /usr/bin/python  ${log_dir}/disaggregator/schedule_disaggregator.py" >> tempcron
-echo "@reboot screen -dmS atboot_disaggregation_viewer /usr/bin/python  ${log_dir}/viewer/start_webserver.py" >> tempcron
+echo "@reboot screen -dmS atboot_disaggregation_P1_logger /usr/bin/python  ${log_dir}/logger/schedule_p1_reader.py >> ${log_dir}/cron.log 2>&1" >> tempcron
+echo "@reboot screen -dmS atboot_disaggregation_disaggregator /usr/bin/python  ${log_dir}/disaggregator/schedule_disaggregator.py >> ${log_dir}/cron.log 2>&1" >> tempcron
+echo "@reboot screen -dmS atboot_disaggregation_viewer /usr/bin/python  ${log_dir}/viewer/start_webserver.py >> ${log_dir}/cron.log 2>&1" >> tempcron
 crontab tempcron
 sudo rm tempcron
 printf "\e[92mOK\e[0m\n"
