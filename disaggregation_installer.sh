@@ -45,7 +45,7 @@ printf "\e[92mOK\e[0m\n"
 printf "\e[96m* INSTALLING DISAGGREGATION FILES from github.com/disaggregation\n"
 printf "\e[96m  - Creating folder structure(s)..."
 sudo mkdir $log_dir >> disaggregation_installer.log
-sudo mkdir $log_dir "/data" >> disaggregation_installer.log
+sudo mkdir $log_dir/data >> disaggregation_installer.log
 sudo cd $log_dir >> disaggregation_installer.log
 printf "\e[92mOK\e[0m\n"
 #***************************************************************************
