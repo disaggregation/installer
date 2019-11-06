@@ -110,9 +110,9 @@ printf "\e[92mOK\e[0m\n"
 printf "\e[96m* CONFIGURE\n"
 printf "\e[96m  - Set CRON-jobs...\n"
 sudo cd ${log_dir}
-echo "@reboot screen -dmS atboot_disaggregation_P1_logger /usr/bin/python  ${log_dir}/logger/schedule_p1_reader.py >> ${log_dir}/cron.log 2>&1" >> tempcron
-echo "@reboot screen -dmS atboot_disaggregation_disaggregator /usr/bin/python  ${log_dir}/disaggregator/schedule_disaggregator.py >> ${log_dir}/cron.log 2>&1" >> tempcron
-echo "@reboot screen -dmS atboot_disaggregation_viewer /usr/bin/python  ${log_dir}/viewer/start_webserver.py >> ${log_dir}/cron.log 2>&1" >> tempcron
+echo "@reboot screen -dmS atboot_disaggregation_P1_logger /usr/bin/python ${log_dir}/logger/schedule_p1_reader.py >> ${log_dir}/cron.log 2>&1" >> tempcron
+echo "@reboot screen -dmS atboot_disaggregation_disaggregator /usr/bin/python ${log_dir}/disaggregator/schedule_disaggregator.py >> ${log_dir}/cron.log 2>&1" >> tempcron
+echo "@reboot screen -dmS atboot_disaggregation_viewer sh ${log_dir}/viewer/start.sh >> ${log_dir}/cron.log 2>&1" >> tempcron
 crontab tempcron
 sudo rm tempcron
 printf "\e[92mOK\e[0m\n"
@@ -123,9 +123,9 @@ if ls /dev | grep 'ttyUSB' >/dev/null 2>&1; then
   printf "\e[92m - OK\e[0m\n"
 
 #printf "\e[96m  - Init website DB..."
-# should be implemented
+  sh ${log_dir}/install.sh 2>&1 >> disaggregation_installer.log 
   printf "\e[96m  - Start viewer (website at localhost:5000)..."
-  screen -dmS atboot_disaggregation_viewer /usr/bin/python ${log_dir}/start_webserver.py 2>&1 >> disaggregation_installer.log 
+  screen -dmS atboot_disaggregation_viewer sh ${log_dir}/start.sh 2>&1 >> disaggregation_installer.log 
   printf "\e[92m - OK\e[0m\n"
 
   printf "\e[96m  - Start disaggregator..."
